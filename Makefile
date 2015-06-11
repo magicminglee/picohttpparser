@@ -25,8 +25,17 @@
 
 CC?=gcc
 PROVE?=prove
+AR= ar rcu
+PHR_A?=libphr.a
+ALL_O?=picohttpparser.o
+CFLAGS=-Wall -O2
 
-all:
+all:$(PHR_A)
+
+o:  $(ALL_O)
+
+$(PHR_A):$(ALL_O)
+	$(AR) $@ $?
 
 test: test-bin
 	$(PROVE) -v ./test-bin
@@ -36,5 +45,6 @@ test-bin: picohttpparser.c picotest/picotest.c test.c
 
 clean:
 	rm -f test-bin
+	rm -f picohttpparser.o
 
 .PHONY: test
